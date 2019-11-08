@@ -1,9 +1,11 @@
 import React from "react";
+import { connect } from "react-redux";
 import axios from "axios";
 import PropTypes from "prop-types";
 import { useField } from "../hooks";
+import { showNotification } from "../reducers/notificationReducer";
 
-const LoginForm = ({ setUser, setNotification }) => {
+const LoginForm = ({ setUser, showNotification }) => {
 	const username = useField("text");
 	const password = useField("password");
 	const { resetField: resetUsernameField, ...usernameInput } = username;
@@ -28,7 +30,7 @@ const LoginForm = ({ setUser, setNotification }) => {
 				console.log(error);
 				resetUsernameField();
 				resetPasswordField();
-				setNotification({
+				showNotification({
 					message: "Wrong username or password!",
 					type: "error"
 				});
@@ -62,4 +64,11 @@ LoginForm.propTypes = {
 	setNotification: PropTypes.func
 };
 
-export default LoginForm;
+const mapDispatchToProps = {
+	showNotification
+};
+
+export default connect(
+	null,
+	mapDispatchToProps
+)(LoginForm);

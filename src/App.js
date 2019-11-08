@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
 import axios from "axios";
 import LoginForm from "./components/LoginForm";
 import AddBlogForm from "./components/AddBlogForm";
@@ -6,17 +7,11 @@ import Blog from "./components/Blog";
 import Notification from "./components/Notification";
 import ToggleWrapper from "./components/ToggleWrapper";
 import blogService from "./services/blogs";
+import { showNotification } from "./reducers/notificationReducer";
 
-function App() {
+function App({ showNotification }) {
 	const [user, setUser] = useState(null);
 	const [blogs, setBlogs] = useState(null);
-	const [notification, setNotification] = useState(null);
-
-	useEffect(() => {
-		setTimeout(() => {
-			setNotification(null);
-		}, 5000);
-	}, [notification]);
 
 	useEffect(() => {
 		const loggedUser = window.localStorage.getItem("loggedUser");
@@ -64,7 +59,7 @@ function App() {
 					setBlogs(
 						blogs.filter(person => person.id !== deletedBlog.id)
 					);
-					setNotification({
+					showNotification({
 						message: `Blog ${deletedBlog.title} by ${deletedBlog.author} deleted!`,
 						type: "success"
 					});
@@ -83,22 +78,15 @@ function App() {
 	if (user === null) {
 		return (
 			<>
-				{notification !== null && (
-					<Notification notification={notification} />
-				)}{" "}
-				<LoginForm
-					setUser={setUser}
-					setNotification={setNotification}
-				/>
+				<Notification />
+				<LoginForm setUser={setUser} />
 			</>
 		);
 	}
 
 	return (
 		<main>
-			{notification !== null && (
-				<Notification notification={notification} />
-			)}
+			<Notification />
 			<div style={{ marginBottom: "1rem" }}>
 				{user !== null && user.name} logged in!{" "}
 				<button onClick={() => handleLogout()}>Logout</button>
@@ -111,7 +99,6 @@ function App() {
 					userToken={user.token}
 					blogs={blogs}
 					setBlogs={setBlogs}
-					setNotification={setNotification}
 				/>
 			</ToggleWrapper>
 			{blogs !== null &&
@@ -134,4 +121,11 @@ function App() {
 	);
 }
 
-export default App;
+const mapDispatchToProps = {
+	showNotification
+};
+
+export default connect(
+	null,
+	mapDispatchToProps
+)(App);

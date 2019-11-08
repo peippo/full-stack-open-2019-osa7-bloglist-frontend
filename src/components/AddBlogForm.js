@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
 import axios from "axios";
 import PropTypes from "prop-types";
+import { showNotification } from "../reducers/notificationReducer";
 
-const AddBlogForm = ({ blogs, userToken, setBlogs, setNotification }) => {
+const AddBlogForm = ({ blogs, userToken, setBlogs, showNotification }) => {
 	const [title, setTitle] = useState("");
 	const [author, setAuthor] = useState("");
 	const [url, setUrl] = useState("");
@@ -22,7 +24,7 @@ const AddBlogForm = ({ blogs, userToken, setBlogs, setNotification }) => {
 			)
 			.then(function(response) {
 				setBlogs(blogs.concat(response.data));
-				setNotification({
+				showNotification({
 					message: `New blog ${title} by ${author} added!`,
 					type: "success"
 				});
@@ -32,7 +34,7 @@ const AddBlogForm = ({ blogs, userToken, setBlogs, setNotification }) => {
 			})
 			.catch(function(error) {
 				console.log(error);
-				setNotification({
+				showNotification({
 					message: "Title & URL are required",
 					type: "error"
 				});
@@ -88,4 +90,17 @@ AddBlogForm.propTypes = {
 	setNotification: PropTypes.func
 };
 
-export default AddBlogForm;
+const mapDispatchToProps = {
+	showNotification
+};
+
+const mapStateToProps = state => {
+	return {
+		notification: state.notification
+	};
+};
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(AddBlogForm);

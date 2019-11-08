@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 const Notification = ({ notification }) => {
@@ -7,16 +8,30 @@ const Notification = ({ notification }) => {
 		padding: "1rem",
 		color: "white"
 	};
-	let typeStyles =
-		notification.type === "error"
-			? { background: "red" }
-			: { background: "green" };
 
-	return <p style={{ ...styles, ...typeStyles }}>{notification.message}</p>;
+	let typeStyles;
+	if (notification !== null) {
+		typeStyles =
+			notification.type === "error"
+				? { background: "red" }
+				: { background: "green" };
+	}
+
+	return (
+		notification !== null && (
+			<p style={{ ...styles, ...typeStyles }}>{notification.message}</p>
+		)
+	);
 };
 
 Notification.propTypes = {
 	notification: PropTypes.object
 };
 
-export default Notification;
+const mapStateToProps = state => {
+	return {
+		notification: state.notification
+	};
+};
+
+export default connect(mapStateToProps)(Notification);
