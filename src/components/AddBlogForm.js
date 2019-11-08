@@ -1,44 +1,36 @@
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
-import axios from "axios";
 import PropTypes from "prop-types";
+import { useField } from "../hooks";
 import { showNotification } from "../reducers/notificationReducer";
+import { createBlog } from "../reducers/blogReducer";
 
-const AddBlogForm = ({ blogs, userToken, setBlogs, showNotification }) => {
-	const [title, setTitle] = useState("");
-	const [author, setAuthor] = useState("");
-	const [url, setUrl] = useState("");
+const AddBlogForm = ({ userToken, showNotification, createBlog }) => {
+	const title = useField("text", true);
+	const author = useField("text");
+	const url = useField("url", true);
+	const { resetField: resetTitleField, ...titleInput } = title;
+	const { resetField: resetAuthorField, ...authorInput } = author;
+	const { resetField: resetUrlField, ...urlInput } = url;
 
 	const handleSubmit = event => {
 		event.preventDefault();
 
-		axios
-			.post(
-				"http://localhost:3001/api/blogs",
-				{
-					title,
-					author,
-					url
-				},
-				{ headers: { Authorization: `bearer ${userToken}` } }
-			)
-			.then(function(response) {
-				setBlogs(blogs.concat(response.data));
-				showNotification({
-					message: `New blog ${title} by ${author} added!`,
-					type: "success"
-				});
-				setTitle("");
-				setAuthor("");
-				setUrl("");
-			})
-			.catch(function(error) {
-				console.log(error);
-				showNotification({
-					message: "Title & URL are required",
-					type: "error"
-				});
-			});
+		createBlog(
+			{
+				title: title.value,
+				author: author.value,
+				url: url.value
+			},
+			{ headers: { Authorization: `bearer ${userToken}` } }
+		);
+		showNotification({
+			message: `New blog ${title.value} by ${author.value} added!`,
+			type: "success"
+		});
+		resetTitleField();
+		resetAuthorField();
+		resetUrlField();
 	};
 
 	return (
@@ -47,35 +39,15 @@ const AddBlogForm = ({ blogs, userToken, setBlogs, showNotification }) => {
 			<form onSubmit={handleSubmit}>
 				<div style={{ marginBottom: "0.5rem" }}>
 					<label htmlFor="title">Title:</label>
-					<input
-						onChange={({ target }) => setTitle(target.value)}
-						type="text"
-						id="title"
-						name="title"
-						value={title}
-						required
-					/>
+					<input {...titleInput} />
 				</div>
 				<div style={{ marginBottom: "0.5rem" }}>
 					<label htmlFor="author">Author:</label>
-					<input
-						onChange={({ target }) => setAuthor(target.value)}
-						type="text"
-						id="author"
-						name="author"
-						value={author}
-					/>
+					<input {...authorInput} />
 				</div>
 				<div style={{ marginBottom: "0.5rem" }}>
 					<label htmlFor="url">Url:</label>
-					<input
-						onChange={({ target }) => setUrl(target.value)}
-						type="url"
-						id="url"
-						name="url"
-						value={url}
-						required
-					/>
+					<input {...urlInput} />
 				</div>
 				<button>Save</button>
 			</form>
@@ -84,14 +56,14 @@ const AddBlogForm = ({ blogs, userToken, setBlogs, showNotification }) => {
 };
 
 AddBlogForm.propTypes = {
-	blogs: PropTypes.array,
 	userToken: PropTypes.string,
-	setBlogs: PropTypes.func,
-	setNotification: PropTypes.func
+	showNotification: PropTypes.func,
+	createBlog: PropTypes.func
 };
 
 const mapDispatchToProps = {
-	showNotification
+	showNotification,
+	createBlog
 };
 
 const mapStateToProps = state => {

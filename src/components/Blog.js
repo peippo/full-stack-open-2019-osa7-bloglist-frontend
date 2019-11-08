@@ -1,8 +1,28 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { likeBlog } from "../reducers/blogReducer";
+import { showNotification } from "../reducers/notificationReducer";
+import { deleteBlog } from "../reducers/blogReducer";
 
-const Blog = ({ user, blog, handleLikeClick, handleDeleteClick }) => {
+const Blog = ({ user, blog, likeBlog, deleteBlog, showNotification }) => {
 	const [isOpen, setIsOpen] = useState(false);
+
+	const handleDeleteClick = deletedBlog => {
+		if (
+			window.confirm(
+				`Remove the blog ${deletedBlog.title} by ${deletedBlog.author}?`
+			)
+		) {
+			deleteBlog(deletedBlog, {
+				headers: { Authorization: `bearer ${user.token}` }
+			});
+			showNotification({
+				message: `Blog ${deletedBlog.title} by ${deletedBlog.author} deleted!`,
+				type: "success"
+			});
+		}
+	};
 
 	let addedBy = null;
 	if (blog.user) {
@@ -64,9 +84,7 @@ const Blog = ({ user, blog, handleLikeClick, handleDeleteClick }) => {
 				</p>
 				<p className="blog__likes">
 					{blog.likes} likes{" "}
-					<button onClick={() => handleLikeClick(blog)}>
-						+1 like
-					</button>
+					<button onClick={() => likeBlog(blog)}>+1 like</button>
 				</p>
 				{addedBy}
 				{deleteButton}
@@ -78,8 +96,18 @@ const Blog = ({ user, blog, handleLikeClick, handleDeleteClick }) => {
 Blog.propTypes = {
 	user: PropTypes.object,
 	blog: PropTypes.object,
-	handleLikeClick: PropTypes.func,
-	handleDeleteClick: PropTypes.func
+	likeBlog: PropTypes.func,
+	deleteBlog: PropTypes.func,
+	showNotification: PropTypes.func
 };
 
-export default Blog;
+const mapDispatchToProps = {
+	likeBlog,
+	deleteBlog,
+	showNotification
+};
+
+export default connect(
+	null,
+	mapDispatchToProps
+)(Blog);

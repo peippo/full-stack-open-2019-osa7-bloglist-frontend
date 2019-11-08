@@ -6,8 +6,8 @@ import { useField } from "../hooks";
 import { showNotification } from "../reducers/notificationReducer";
 
 const LoginForm = ({ setUser, showNotification }) => {
-	const username = useField("text");
-	const password = useField("password");
+	const username = useField("text", true);
+	const password = useField("password", true);
 	const { resetField: resetUsernameField, ...usernameInput } = username;
 	const { resetField: resetPasswordField, ...passwordInput } = password;
 
@@ -56,12 +56,8 @@ const LoginForm = ({ setUser, showNotification }) => {
 };
 
 LoginForm.propTypes = {
-	username: PropTypes.string,
-	setUsername: PropTypes.func,
-	password: PropTypes.string,
-	setPassword: PropTypes.func,
 	setUser: PropTypes.func,
-	setNotification: PropTypes.func
+	showNotification: PropTypes.func
 };
 
 const mapDispatchToProps = {
