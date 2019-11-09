@@ -1,25 +1,17 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import Navigation from "./components/Navigation";
 import LoginForm from "./components/LoginForm";
-import AddBlogForm from "./components/AddBlogForm";
-import Blog from "./components/Blog";
+import Blogs from "./components/Blogs";
 import Notification from "./components/Notification";
-import ToggleWrapper from "./components/ToggleWrapper";
 import UserList from "./components/UserList";
-import { initializeBlogs } from "./reducers/blogReducer";
-import { initializeLocalStorage, logoutUser } from "./reducers/loginReducer";
+import { initializeLocalStorage } from "./reducers/loginReducer";
 
-const App = ({
-	initializeLocalStorage,
-	initializeBlogs,
-	login,
-	blogs,
-	logoutUser
-}) => {
+const App = ({ initializeLocalStorage, login }) => {
 	useEffect(() => {
 		initializeLocalStorage();
-		initializeBlogs();
-	}, [initializeLocalStorage, initializeBlogs]);
+	}, [initializeLocalStorage]);
 
 	if (login === null) {
 		return (
@@ -31,43 +23,23 @@ const App = ({
 	}
 
 	return (
-		<main>
+		<Router>
+			<Navigation />
 			<Notification />
-			<div style={{ marginBottom: "1rem" }}>
-				{login !== null && login.name} logged in!{" "}
-				<button onClick={() => logoutUser()}>Logout</button>
-			</div>
-			<ToggleWrapper
-				showButtonLabel="Add new blog"
-				hideButtonLabel="Cancel"
-			>
-				<AddBlogForm />
-			</ToggleWrapper>
-			<UserList />
-			<h2>Blogs</h2>
-			{blogs !== null &&
-				blogs
-					.sort(function(a, b) {
-						return b.likes - a.likes;
-					})
-					.map(blog => {
-						return <Blog blog={blog} key={blog.id} />;
-					})}
-		</main>
+			<Route path="/users" render={() => <UserList />} />
+			<Route exact path="/" render={() => <Blogs />} />
+		</Router>
 	);
 };
 
 const mapStateToProps = state => {
 	return {
-		blogs: state.blogs,
 		login: state.login
 	};
 };
 
 const mapDispatchToProps = {
-	initializeLocalStorage,
-	initializeBlogs,
-	logoutUser
+	initializeLocalStorage
 };
 
 export default connect(
