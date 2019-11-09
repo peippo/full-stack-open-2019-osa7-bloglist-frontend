@@ -1,15 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import Blog from "./Blog";
 import AddBlogForm from "../components/AddBlogForm";
 import ToggleWrapper from "../components/ToggleWrapper";
-import { initializeBlogs } from "../reducers/blogReducer";
 
-const Blogs = ({ initializeBlogs, blogs }) => {
-	useEffect(() => {
-		initializeBlogs();
-	}, [initializeBlogs]);
-
+const Blogs = ({ blogs }) => {
 	return (
 		<>
 			<h2>Blogs</h2>
@@ -37,11 +32,4 @@ const mapStateToProps = state => {
 	};
 };
 
-const mapDispatchToProps = {
-	initializeBlogs
-};
-
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(Blogs);
+export default connect(mapStateToProps)(Blogs);

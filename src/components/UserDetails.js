@@ -1,5 +1,4 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 const UserDetails = ({ userId, users }) => {
@@ -26,4 +25,4 @@ const mapStateToProps = state => {
 	};
 };
 
-export default withRouter(connect(mapStateToProps)(UserDetails));
+export default connect(mapStateToProps)(UserDetails);
