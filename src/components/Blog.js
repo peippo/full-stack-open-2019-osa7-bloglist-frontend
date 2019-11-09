@@ -5,7 +5,7 @@ import { likeBlog } from "../reducers/blogReducer";
 import { showNotification } from "../reducers/notificationReducer";
 import { deleteBlog } from "../reducers/blogReducer";
 
-const Blog = ({ user, blog, likeBlog, deleteBlog, showNotification }) => {
+const Blog = ({ login, blog, likeBlog, deleteBlog, showNotification }) => {
 	const [isOpen, setIsOpen] = useState(false);
 
 	const handleDeleteClick = deletedBlog => {
@@ -15,7 +15,7 @@ const Blog = ({ user, blog, likeBlog, deleteBlog, showNotification }) => {
 			)
 		) {
 			deleteBlog(deletedBlog, {
-				headers: { Authorization: `bearer ${user.token}` }
+				headers: { Authorization: `bearer ${login.token}` }
 			});
 			showNotification({
 				message: `Blog ${deletedBlog.title} by ${deletedBlog.author} deleted!`,
@@ -30,7 +30,7 @@ const Blog = ({ user, blog, likeBlog, deleteBlog, showNotification }) => {
 	}
 
 	let deleteButton = null;
-	if (blog.user.username === user.username) {
+	if (blog.user.username === login.username) {
 		deleteButton = (
 			<button onClick={() => handleDeleteClick(blog)}>Delete</button>
 		);
@@ -94,7 +94,7 @@ const Blog = ({ user, blog, likeBlog, deleteBlog, showNotification }) => {
 };
 
 Blog.propTypes = {
-	user: PropTypes.object,
+	login: PropTypes.object,
 	blog: PropTypes.object,
 	likeBlog: PropTypes.func,
 	deleteBlog: PropTypes.func,
@@ -103,7 +103,7 @@ Blog.propTypes = {
 
 const mapStateToProps = state => {
 	return {
-		user: state.user
+		login: state.login
 	};
 };
 

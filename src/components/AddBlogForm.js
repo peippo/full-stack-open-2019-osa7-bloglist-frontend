@@ -5,7 +5,7 @@ import { useField } from "../hooks";
 import { showNotification } from "../reducers/notificationReducer";
 import { createBlog } from "../reducers/blogReducer";
 
-const AddBlogForm = ({ user, showNotification, createBlog }) => {
+const AddBlogForm = ({ login, showNotification, createBlog }) => {
 	const title = useField("text", true);
 	const author = useField("text");
 	const url = useField("url", true);
@@ -22,7 +22,7 @@ const AddBlogForm = ({ user, showNotification, createBlog }) => {
 				author: author.value,
 				url: url.value
 			},
-			{ headers: { Authorization: `bearer ${user.token}` } }
+			{ headers: { Authorization: `bearer ${login.token}` } }
 		);
 		showNotification({
 			message: `New blog ${title.value} by ${author.value} added!`,
@@ -56,7 +56,7 @@ const AddBlogForm = ({ user, showNotification, createBlog }) => {
 };
 
 AddBlogForm.propTypes = {
-	user: PropTypes.object,
+	login: PropTypes.object,
 	showNotification: PropTypes.func,
 	createBlog: PropTypes.func
 };
@@ -69,7 +69,7 @@ const mapDispatchToProps = {
 const mapStateToProps = state => {
 	return {
 		notification: state.notification,
-		user: state.user
+		login: state.login
 	};
 };
 

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { useField } from "../hooks";
 import { showNotification } from "../reducers/notificationReducer";
-import { loginUser } from "../reducers/userReducer";
+import { loginUser } from "../reducers/loginReducer";
 
 const LoginForm = ({ loginUser, showNotification }) => {
 	const username = useField("text", true);

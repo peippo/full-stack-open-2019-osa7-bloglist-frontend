@@ -1,9 +1,9 @@
 import loginService from "../services/login";
 const initialState = null;
 
-const userReducer = (state = initialState, action) => {
+const loginReducer = (state = initialState, action) => {
 	switch (action.type) {
-		case "INITIALIZE_USER": {
+		case "INITIALIZE_LOCAL_STORAGE": {
 			const loggedUser = window.localStorage.getItem("loggedUser");
 			return JSON.parse(loggedUser);
 		}
@@ -21,9 +21,9 @@ const userReducer = (state = initialState, action) => {
 	}
 };
 
-export const initializeUser = () => {
+export const initializeLocalStorage = () => {
 	return {
-		type: "INITIALIZE_USER"
+		type: "INITIALIZE_LOCAL_STORAGE"
 	};
 };
 
@@ -43,4 +43,4 @@ export const logoutUser = () => {
 	};
 };
 
-export default userReducer;
+export default loginReducer;

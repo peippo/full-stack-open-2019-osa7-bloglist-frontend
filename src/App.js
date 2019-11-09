@@ -5,16 +5,23 @@ import AddBlogForm from "./components/AddBlogForm";
 import Blog from "./components/Blog";
 import Notification from "./components/Notification";
 import ToggleWrapper from "./components/ToggleWrapper";
+import UserList from "./components/UserList";
 import { initializeBlogs } from "./reducers/blogReducer";
-import { initializeUser, logoutUser } from "./reducers/userReducer";
+import { initializeLocalStorage, logoutUser } from "./reducers/loginReducer";
 
-const App = ({ initializeUser, initializeBlogs, user, blogs, logoutUser }) => {
+const App = ({
+	initializeLocalStorage,
+	initializeBlogs,
+	login,
+	blogs,
+	logoutUser
+}) => {
 	useEffect(() => {
-		initializeUser();
+		initializeLocalStorage();
 		initializeBlogs();
-	}, [initializeUser, initializeBlogs]);
+	}, [initializeLocalStorage, initializeBlogs]);
 
-	if (user === null) {
+	if (login === null) {
 		return (
 			<>
 				<Notification />
@@ -27,7 +34,7 @@ const App = ({ initializeUser, initializeBlogs, user, blogs, logoutUser }) => {
 		<main>
 			<Notification />
 			<div style={{ marginBottom: "1rem" }}>
-				{user !== null && user.name} logged in!{" "}
+				{login !== null && login.name} logged in!{" "}
 				<button onClick={() => logoutUser()}>Logout</button>
 			</div>
 			<ToggleWrapper
@@ -36,6 +43,8 @@ const App = ({ initializeUser, initializeBlogs, user, blogs, logoutUser }) => {
 			>
 				<AddBlogForm />
 			</ToggleWrapper>
+			<UserList />
+			<h2>Blogs</h2>
 			{blogs !== null &&
 				blogs
 					.sort(function(a, b) {
@@ -51,12 +60,12 @@ const App = ({ initializeUser, initializeBlogs, user, blogs, logoutUser }) => {
 const mapStateToProps = state => {
 	return {
 		blogs: state.blogs,
-		user: state.user
+		login: state.login
 	};
 };
 
 const mapDispatchToProps = {
-	initializeUser,
+	initializeLocalStorage,
 	initializeBlogs,
 	logoutUser
 };
