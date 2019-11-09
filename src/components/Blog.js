@@ -101,6 +101,12 @@ Blog.propTypes = {
 	showNotification: PropTypes.func
 };
 
+const mapStateToProps = state => {
+	return {
+		user: state.user
+	};
+};
+
 const mapDispatchToProps = {
 	likeBlog,
 	deleteBlog,
@@ -108,6 +114,6 @@ const mapDispatchToProps = {
 };
 
 export default connect(
-	null,
+	mapStateToProps,
 	mapDispatchToProps
 )(Blog);

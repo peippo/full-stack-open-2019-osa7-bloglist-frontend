@@ -1,41 +1,33 @@
 import React from "react";
 import { connect } from "react-redux";
-import axios from "axios";
 import PropTypes from "prop-types";
 import { useField } from "../hooks";
 import { showNotification } from "../reducers/notificationReducer";
+import { loginUser } from "../reducers/userReducer";
 
-const LoginForm = ({ setUser, showNotification }) => {
+const LoginForm = ({ loginUser, showNotification }) => {
 	const username = useField("text", true);
 	const password = useField("password", true);
 	const { resetField: resetUsernameField, ...usernameInput } = username;
 	const { resetField: resetPasswordField, ...passwordInput } = password;
 
-	const handleSubmit = event => {
+	async function handleSubmit(event) {
 		event.preventDefault();
+		resetUsernameField();
+		resetPasswordField();
 
-		axios
-			.post("http://localhost:3001/api/login", {
+		try {
+			await loginUser({
 				username: username.value,
 				password: password.value
-			})
-			.then(function(response) {
-				setUser(response.data);
-				window.localStorage.setItem(
-					"loggedUser",
-					JSON.stringify(response.data)
-				);
-			})
-			.catch(function(error) {
-				console.log(error);
-				resetUsernameField();
-				resetPasswordField();
-				showNotification({
-					message: "Wrong username or password!",
-					type: "error"
-				});
 			});
-	};
+		} catch (error) {
+			showNotification({
+				message: "Wrong username or password!",
+				type: "error"
+			});
+		}
+	}
 
 	return (
 		<>
@@ -56,11 +48,12 @@ const LoginForm = ({ setUser, showNotification }) => {
 };
 
 LoginForm.propTypes = {
-	setUser: PropTypes.func,
+	loginUser: PropTypes.func,
 	showNotification: PropTypes.func
 };
 
 const mapDispatchToProps = {
+	loginUser,
 	showNotification
 };
 

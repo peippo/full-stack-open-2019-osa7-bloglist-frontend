@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import LoginForm from "./components/LoginForm";
 import AddBlogForm from "./components/AddBlogForm";
@@ -6,31 +6,19 @@ import Blog from "./components/Blog";
 import Notification from "./components/Notification";
 import ToggleWrapper from "./components/ToggleWrapper";
 import { initializeBlogs } from "./reducers/blogReducer";
+import { initializeUser, logoutUser } from "./reducers/userReducer";
 
-function App({ initializeBlogs, blogs }) {
-	const [user, setUser] = useState(null);
-
+const App = ({ initializeUser, initializeBlogs, user, blogs, logoutUser }) => {
 	useEffect(() => {
-		const loggedUser = window.localStorage.getItem("loggedUser");
-		if (loggedUser !== null && loggedUser !== undefined) {
-			setUser(JSON.parse(loggedUser));
-		}
-	}, []);
-
-	useEffect(() => {
+		initializeUser();
 		initializeBlogs();
-	}, [initializeBlogs]);
-
-	const handleLogout = () => {
-		window.localStorage.removeItem("loggedUser");
-		setUser(null);
-	};
+	}, [initializeUser, initializeBlogs]);
 
 	if (user === null) {
 		return (
 			<>
 				<Notification />
-				<LoginForm setUser={setUser} />
+				<LoginForm />
 			</>
 		);
 	}
@@ -40,13 +28,13 @@ function App({ initializeBlogs, blogs }) {
 			<Notification />
 			<div style={{ marginBottom: "1rem" }}>
 				{user !== null && user.name} logged in!{" "}
-				<button onClick={() => handleLogout()}>Logout</button>
+				<button onClick={() => logoutUser()}>Logout</button>
 			</div>
 			<ToggleWrapper
 				showButtonLabel="Add new blog"
 				hideButtonLabel="Cancel"
 			>
-				<AddBlogForm userToken={user.token} />
+				<AddBlogForm />
 			</ToggleWrapper>
 			{blogs !== null &&
 				blogs
@@ -54,20 +42,23 @@ function App({ initializeBlogs, blogs }) {
 						return b.likes - a.likes;
 					})
 					.map(blog => {
-						return <Blog user={user} blog={blog} key={blog.id} />;
+						return <Blog blog={blog} key={blog.id} />;
 					})}
 		</main>
 	);
-}
+};
 
 const mapStateToProps = state => {
 	return {
-		blogs: state.blogs
+		blogs: state.blogs,
+		user: state.user
 	};
 };
 
 const mapDispatchToProps = {
-	initializeBlogs
+	initializeUser,
+	initializeBlogs,
+	logoutUser
 };
 
 export default connect(
