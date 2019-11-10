@@ -10,6 +10,16 @@ export const likeBlog = blog => {
 	};
 };
 
+export const commentBlog = (blog, comment) => {
+	return async dispatch => {
+		const updatedBlog = await blogService.addComment(blog, comment);
+		dispatch({
+			type: "COMMENT",
+			data: updatedBlog
+		});
+	};
+};
+
 export const createBlog = (content, headers) => {
 	return async dispatch => {
 		const newBlog = await blogService.createNewBlog(content, headers);
@@ -44,6 +54,7 @@ const blogReducer = (state = [], action) => {
 	switch (action.type) {
 		case "INITIALIZE_BLOGS":
 			return action.data;
+		case "COMMENT":
 		case "LIKE": {
 			return state.map(blog =>
 				blog.id !== action.data.id ? blog : action.data

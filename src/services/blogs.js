@@ -12,6 +12,14 @@ const addLike = async blog => {
 	return response.data;
 };
 
+const addComment = async (blog, comment) => {
+	const response = await axios.post(
+		`${baseUrl}/${blog.id}/comments`,
+		comment
+	);
+	return response.data;
+};
+
 const createNewBlog = async (content, headers) => {
 	const response = await axios.post(baseUrl, content, headers);
 	return response.data;
@@ -22,4 +30,4 @@ const deleteBlog = async (blog, headers) => {
 	return response.data;
 };
 
-export default { getAll, addLike, createNewBlog, deleteBlog };
+export default { getAll, addLike, addComment, createNewBlog, deleteBlog };

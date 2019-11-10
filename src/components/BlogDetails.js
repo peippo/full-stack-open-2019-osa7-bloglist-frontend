@@ -48,12 +48,12 @@ const BlogDetails = ({
 						<button onClick={() => likeBlog(blog)}>+1 like</button>
 					</p>
 					<p className="blog__added">Added by {blog.user.name}</p>
-					<button onClick={() => handleDeleteClick(blog)}>
-						Delete
-					</button>
-					{blog.comments.length > 0 && (
-						<BlogComments comments={blog.comments} />
+					{blog.user.username === login.username && (
+						<button onClick={() => handleDeleteClick(blog)}>
+							Delete
+						</button>
 					)}
+					<BlogComments blog={blog} />
 				</div>
 			)}
 		</>
