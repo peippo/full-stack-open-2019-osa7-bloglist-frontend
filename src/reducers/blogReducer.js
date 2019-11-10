@@ -30,7 +30,7 @@ export const deleteBlog = (blog, headers) => {
 	};
 };
 
-export const initializeBlogs = () => {
+export const fetchBlogs = () => {
 	return async dispatch => {
 		const blogs = await blogService.getAll();
 		dispatch({

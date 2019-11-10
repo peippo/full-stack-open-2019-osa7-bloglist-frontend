@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import BlogComments from "./BlogComments";
 import { likeBlog, deleteBlog } from "../reducers/blogReducer";
 import { showNotification } from "../reducers/notificationReducer";
 
@@ -50,6 +51,9 @@ const BlogDetails = ({
 					<button onClick={() => handleDeleteClick(blog)}>
 						Delete
 					</button>
+					{blog.comments.length > 0 && (
+						<BlogComments comments={blog.comments} />
+					)}
 				</div>
 			)}
 		</>

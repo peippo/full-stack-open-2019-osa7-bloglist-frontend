@@ -9,20 +9,15 @@ import UserDetails from "./components/UserDetails";
 import Notification from "./components/Notification";
 import UserList from "./components/UserList";
 import { initializeLocalStorage } from "./reducers/loginReducer";
-import { initializeUsers } from "./reducers/usersReducer";
-import { initializeBlogs } from "./reducers/blogReducer";
+import { fetchUsers } from "./reducers/usersReducer";
+import { fetchBlogs } from "./reducers/blogReducer";
 
-const App = ({
-	initializeLocalStorage,
-	initializeUsers,
-	initializeBlogs,
-	login
-}) => {
+const App = ({ initializeLocalStorage, fetchUsers, fetchBlogs, login }) => {
 	useEffect(() => {
 		initializeLocalStorage();
-		initializeUsers();
-		initializeBlogs();
-	}, [initializeLocalStorage, initializeUsers, initializeBlogs]);
+		fetchUsers();
+		fetchBlogs();
+	}, [initializeLocalStorage, fetchUsers, fetchBlogs]);
 
 	if (login === null) {
 		return (
@@ -59,8 +54,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
 	initializeLocalStorage,
-	initializeUsers,
-	initializeBlogs
+	fetchUsers,
+	fetchBlogs
 };
 
 export default connect(
