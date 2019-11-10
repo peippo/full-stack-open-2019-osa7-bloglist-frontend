@@ -4,17 +4,19 @@ import PropTypes from "prop-types";
 
 const Notification = ({ notification }) => {
 	const styles = {
-		maxWidth: "200px",
 		padding: "1rem",
-		color: "white"
+		color: "white",
+		fontWeight: "700",
+		borderRadius: "5px",
+		textAlign: "center"
 	};
 
 	let typeStyles;
 	if (notification !== null) {
 		typeStyles =
 			notification.type === "error"
-				? { background: "red" }
-				: { background: "green" };
+				? { background: "#ff2b2b" }
+				: { background: "#add21c" };
 	}
 
 	return (

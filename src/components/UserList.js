@@ -1,11 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { MainHeading } from "../theme/commonStyles";
 
 const UserList = ({ users }) => {
 	return (
 		<div>
-			<h2>Users</h2>
+			<MainHeading>Users</MainHeading>
 			<ul>
 				{users !== null &&
 					users.map(user => {
@@ -13,7 +14,7 @@ const UserList = ({ users }) => {
 						return (
 							<li key={user.id}>
 								<Link to={`/users/${user.id}`}>
-									{user.name}
+									<b>{user.name}</b>
 								</Link>{" "}
 								({blogsCreated}{" "}
 								{blogsCreated === 1

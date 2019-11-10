@@ -5,12 +5,12 @@ import PropTypes from "prop-types";
 
 const Blog = ({ blog }) => {
 	return (
-		<div>
+		<li>
 			<b>
 				<Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
 			</b>{" "}
 			by {blog.author}
-		</div>
+		</li>
 	);
 };
 

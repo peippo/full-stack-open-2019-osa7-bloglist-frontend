@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { PrimaryButton } from "../components/Button";
 import { useField } from "../hooks";
 import { showNotification } from "../reducers/notificationReducer";
 import { createBlog } from "../reducers/blogReducer";
@@ -49,7 +50,7 @@ const AddBlogForm = ({ login, showNotification, createBlog }) => {
 					<label htmlFor="url">Url:</label>
 					<input {...urlInput} />
 				</div>
-				<button>Save</button>
+				<PrimaryButton>Save</PrimaryButton>
 			</form>
 		</>
 	);

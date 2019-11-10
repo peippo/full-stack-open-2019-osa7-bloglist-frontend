@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { MainHeading, BackLink } from "../theme/commonStyles";
 
 const UserDetails = ({ userId, users }) => {
 	if (users === null) return null;
@@ -8,7 +9,8 @@ const UserDetails = ({ userId, users }) => {
 
 	return (
 		<div>
-			<h2>{user.name}</h2>
+			<BackLink to="/users">Users</BackLink>
+			<MainHeading>{user.name}</MainHeading>
 			<h3>Blog posts:</h3>
 			<ul>
 				{user.blogs.map(blog => {

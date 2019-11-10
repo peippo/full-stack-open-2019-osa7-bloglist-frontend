@@ -4,6 +4,8 @@ import { withRouter } from "react-router-dom";
 import BlogComments from "./BlogComments";
 import { likeBlog, deleteBlog } from "../reducers/blogReducer";
 import { showNotification } from "../reducers/notificationReducer";
+import { MainHeading, BackLink } from "../theme/commonStyles";
+import { PrimaryButton, SecondaryButton } from "../components/Button";
 
 const BlogDetails = ({
 	history,
@@ -24,7 +26,7 @@ const BlogDetails = ({
 				`Remove the blog ${deletedBlog.title} by ${deletedBlog.author}?`
 			)
 		) {
-			history.push("/");
+			history.push("/blogs");
 			deleteBlog(deletedBlog, {
 				headers: { Authorization: `bearer ${login.token}` }
 			});
@@ -39,19 +41,25 @@ const BlogDetails = ({
 		<>
 			{blog !== undefined && (
 				<div>
-					<h2>{blog.title}</h2> <h3>by {blog.author}</h3>
+					<BackLink to="/blogs">Blogs</BackLink>
+					<MainHeading>{blog.title}</MainHeading>{" "}
+					<h3>by {blog.author}</h3>
 					<p>
 						<a href={blog.url}>{blog.url}</a>
 					</p>
 					<p>
 						{blog.likes} likes{" "}
-						<button onClick={() => likeBlog(blog)}>+1 like</button>
+						<PrimaryButton onClick={() => likeBlog(blog)}>
+							+1 like
+						</PrimaryButton>
 					</p>
 					<p className="blog__added">Added by {blog.user.name}</p>
 					{blog.user.username === login.username && (
-						<button onClick={() => handleDeleteClick(blog)}>
+						<SecondaryButton
+							onClick={() => handleDeleteClick(blog)}
+						>
 							Delete
-						</button>
+						</SecondaryButton>
 					)}
 					<BlogComments blog={blog} />
 				</div>

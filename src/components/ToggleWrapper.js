@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { PrimaryButton, SecondaryButton } from "../components/Button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const ToggleWrapper = ({ showButtonLabel, hideButtonLabel, children }) => {
 	const [isVisible, setIsVisible] = useState(false);
 
 	if (!isVisible) {
 		return (
-			<button onClick={() => setIsVisible(!isVisible)}>
-				{showButtonLabel}
-			</button>
+			<PrimaryButton onClick={() => setIsVisible(!isVisible)}>
+				<FontAwesomeIcon icon={faPlus} /> {showButtonLabel}
+			</PrimaryButton>
 		);
 	}
 
@@ -16,9 +19,9 @@ const ToggleWrapper = ({ showButtonLabel, hideButtonLabel, children }) => {
 		return (
 			<>
 				<div>{children}</div>
-				<button onClick={() => setIsVisible(!isVisible)}>
+				<SecondaryButton onClick={() => setIsVisible(!isVisible)}>
 					{hideButtonLabel}
-				</button>
+				</SecondaryButton>
 			</>
 		);
 	}

@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { useField } from "../hooks";
 import { commentBlog } from "../reducers/blogReducer";
+import { PrimaryButton } from "../components/Button";
 
 const BlogComments = ({ blog, commentBlog }) => {
 	const comment = useField("text", true);
@@ -32,7 +33,7 @@ const BlogComments = ({ blog, commentBlog }) => {
 					<label htmlFor="title">Add new comment:</label>
 					<input {...commentInput} />
 				</div>
-				<button>Save</button>
+				<PrimaryButton>Save</PrimaryButton>
 			</form>
 		</div>
 	);
