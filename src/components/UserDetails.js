@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { MainHeading, BackLink } from "../theme/commonStyles";
 
 const UserDetails = ({ userId, users }) => {
@@ -14,7 +15,11 @@ const UserDetails = ({ userId, users }) => {
 			<h3>Blog posts:</h3>
 			<ul>
 				{user.blogs.map(blog => {
-					return <li key={blog.id}>{blog.title}</li>;
+					return (
+						<li key={blog.id}>
+							<Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
+						</li>
+					);
 				})}
 			</ul>
 		</div>

@@ -10,7 +10,6 @@ const StyledPrimaryButton = styled.button`
 	padding: 0.25rem 1rem;
 	border-radius: 5px;
 	font-family: "Nunito Sans", sans-serif;
-	margin: 5px 0;
 
 	&:hover {
 		cursor: pointer;
