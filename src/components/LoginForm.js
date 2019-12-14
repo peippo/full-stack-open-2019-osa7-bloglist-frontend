@@ -1,7 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import PropTypes from "prop-types";
 import { useField } from "../hooks";
 import { showNotification } from "../reducers/notificationReducer";
 import { loginUser } from "../reducers/loginReducer";
@@ -54,6 +54,12 @@ const LoginForm = ({ history, loginUser, showNotification }) => {
 };
 
 LoginForm.propTypes = {
+	history: PropTypes.object,
+	loginUser: PropTypes.func,
+	showNotification: PropTypes.func
+};
+
+LoginForm.propTypes = {
 	loginUser: PropTypes.func,
 	showNotification: PropTypes.func
 };
@@ -63,9 +69,4 @@ const mapDispatchToProps = {
 	showNotification
 };
 
-export default withRouter(
-	connect(
-		null,
-		mapDispatchToProps
-	)(LoginForm)
-);
+export default withRouter(connect(null, mapDispatchToProps)(LoginForm));

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
 import BlogComments from "./BlogComments";
@@ -81,6 +82,16 @@ const BlogDetails = ({
 	);
 };
 
+BlogDetails.propTypes = {
+	history: PropTypes.object,
+	blogId: PropTypes.string,
+	blogs: PropTypes.array,
+	login: PropTypes.object,
+	likeBlog: PropTypes.func,
+	deleteBlog: PropTypes.func,
+	showNotification: PropTypes.func
+};
+
 const BlogLink = styled.a`
 	display: block;
 	padding-left: 1rem;
@@ -120,8 +131,5 @@ const mapDispatchToProps = {
 };
 
 export default withRouter(
-	connect(
-		mapStateToProps,
-		mapDispatchToProps
-	)(BlogDetails)
+	connect(mapStateToProps, mapDispatchToProps)(BlogDetails)
 );

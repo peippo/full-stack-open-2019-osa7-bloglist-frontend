@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { MainHeading, BackLink } from "../theme/commonStyles";
@@ -24,6 +25,11 @@ const UserDetails = ({ userId, users }) => {
 			</ul>
 		</div>
 	);
+};
+
+UserDetails.propTypes = {
+	userId: PropTypes.string,
+	users: PropTypes.array
 };
 
 const mapStateToProps = state => {

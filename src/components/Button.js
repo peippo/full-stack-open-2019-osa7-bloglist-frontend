@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import styled from "styled-components";
 
 const StyledPrimaryButton = styled.button`
@@ -50,4 +51,19 @@ export const LogoutButton = props => {
 			{props.children}
 		</StyledLogoutButton>
 	);
+};
+
+PrimaryButton.propTypes = {
+	onClick: PropTypes.func,
+	children: PropTypes.node
+};
+
+SecondaryButton.propTypes = {
+	onClick: PropTypes.func,
+	children: PropTypes.node
+};
+
+LogoutButton.propTypes = {
+	onClick: PropTypes.func,
+	children: PropTypes.node
 };

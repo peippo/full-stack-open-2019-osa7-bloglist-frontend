@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { useField } from "../hooks";
 import { commentBlog } from "../reducers/blogReducer";
@@ -47,6 +48,11 @@ const BlogComments = ({ blog, commentBlog }) => {
 	);
 };
 
+BlogComments.propTypes = {
+	blog: PropTypes.object,
+	commentBlog: PropTypes.func
+};
+
 const NoComments = styled.p`
 	max-width: 370px;
 	color: #999;
@@ -70,7 +76,4 @@ const mapDispatchToProps = {
 	commentBlog
 };
 
-export default connect(
-	null,
-	mapDispatchToProps
-)(BlogComments);
+export default connect(null, mapDispatchToProps)(BlogComments);

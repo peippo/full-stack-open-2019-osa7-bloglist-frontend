@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Blog from "./Blog";
 import AddBlogForm from "../components/AddBlogForm";
@@ -27,6 +28,10 @@ const Blogs = ({ blogs }) => {
 			</ToggleWrapper>
 		</>
 	);
+};
+
+Blogs.propTypes = {
+	blogs: PropTypes.array
 };
 
 const mapStateToProps = state => {
