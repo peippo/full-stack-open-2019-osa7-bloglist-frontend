@@ -31,7 +31,7 @@ const StyledLogoutButton = styled(StyledPrimaryButton)`
 
 export const PrimaryButton = props => {
 	return (
-		<StyledPrimaryButton onClick={props.onClick}>
+		<StyledPrimaryButton onClick={props.onClick} data-cy={props.dataCy}>
 			{props.children}
 		</StyledPrimaryButton>
 	);
@@ -39,7 +39,7 @@ export const PrimaryButton = props => {
 
 export const SecondaryButton = props => {
 	return (
-		<StyledSecondaryButton onClick={props.onClick}>
+		<StyledSecondaryButton onClick={props.onClick} data-cy={props.dataCy}>
 			{props.children}
 		</StyledSecondaryButton>
 	);
@@ -55,12 +55,14 @@ export const LogoutButton = props => {
 
 PrimaryButton.propTypes = {
 	onClick: PropTypes.func,
-	children: PropTypes.node
+	children: PropTypes.node,
+	dataCy: PropTypes.string
 };
 
 SecondaryButton.propTypes = {
 	onClick: PropTypes.func,
-	children: PropTypes.node
+	children: PropTypes.node,
+	dataCy: PropTypes.string
 };
 
 LogoutButton.propTypes = {

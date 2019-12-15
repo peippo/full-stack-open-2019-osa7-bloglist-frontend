@@ -53,7 +53,10 @@ const BlogDetails = ({
 						<span style={{ marginRight: "1rem" }}>
 							{blog.likes} likes
 						</span>
-						<PrimaryButton onClick={() => likeBlog(blog)}>
+						<PrimaryButton
+							onClick={() => likeBlog(blog)}
+							dataCy="likePost"
+						>
 							+1 like
 						</PrimaryButton>
 					</Likes>
@@ -71,6 +74,7 @@ const BlogDetails = ({
 						{blog.user.username === login.username && (
 							<SecondaryButton
 								onClick={() => handleDeleteClick(blog)}
+								dataCy="deletePost"
 							>
 								Delete post
 							</SecondaryButton>

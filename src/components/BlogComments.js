@@ -40,9 +40,9 @@ const BlogComments = ({ blog, commentBlog }) => {
 			<Form onSubmit={handleSubmit}>
 				<div style={{ marginRight: "1rem" }}>
 					<label htmlFor="title">Add new comment:</label>
-					<input {...commentInput} />
+					<input {...commentInput} data-cy="comment" />
 				</div>
-				<PrimaryButton>Save comment</PrimaryButton>
+				<PrimaryButton dataCy="saveComment">Save comment</PrimaryButton>
 			</Form>
 		</div>
 	);

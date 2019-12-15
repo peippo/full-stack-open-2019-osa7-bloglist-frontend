@@ -41,11 +41,11 @@ const LoginForm = ({ history, loginUser, showNotification }) => {
 			<form style={{ marginTop: "20px" }} onSubmit={handleSubmit}>
 				<div style={{ marginBottom: "0.5rem" }}>
 					<label htmlFor="username">Username:</label>
-					<input {...usernameInput} />
+					<input {...usernameInput} data-cy="username" />
 				</div>
 				<div style={{ marginBottom: "0.5rem" }}>
 					<label htmlFor="password">Password:</label>
-					<input {...passwordInput} />
+					<input {...passwordInput} data-cy="password" />
 				</div>
 				<PrimaryButton>Login</PrimaryButton>
 			</form>

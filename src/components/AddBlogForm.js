@@ -40,17 +40,17 @@ const AddBlogForm = ({ login, showNotification, createBlog }) => {
 			<form onSubmit={handleSubmit}>
 				<div style={{ marginBottom: "0.5rem" }}>
 					<label htmlFor="title">Title:</label>
-					<input {...titleInput} />
+					<input {...titleInput} data-cy="title" />
 				</div>
 				<div style={{ marginBottom: "0.5rem" }}>
 					<label htmlFor="author">Author:</label>
-					<input {...authorInput} />
+					<input {...authorInput} data-cy="author" />
 				</div>
 				<div style={{ marginBottom: "0.5rem" }}>
 					<label htmlFor="url">Url:</label>
-					<input {...urlInput} />
+					<input {...urlInput} data-cy="url" />
 				</div>
-				<PrimaryButton>Save</PrimaryButton>
+				<PrimaryButton dataCy="saveBlog">Save</PrimaryButton>
 			</form>
 		</>
 	);
@@ -74,7 +74,4 @@ const mapStateToProps = state => {
 	};
 };
 
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(AddBlogForm);
+export default connect(mapStateToProps, mapDispatchToProps)(AddBlogForm);

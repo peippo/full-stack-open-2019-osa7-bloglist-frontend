@@ -23,6 +23,7 @@ const Blogs = ({ blogs }) => {
 			<ToggleWrapper
 				showButtonLabel="Add new blog"
 				hideButtonLabel="Cancel"
+				dataCy="addNewBlog"
 			>
 				<AddBlogForm />
 			</ToggleWrapper>
